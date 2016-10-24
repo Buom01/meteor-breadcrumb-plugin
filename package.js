@@ -1,7 +1,7 @@
 Package.describe({
   name: 'buom01:flow-router-breadcrumb',
   summary: 'This package will provide a easy way to add a breadcrumb to FlowRouter with more flexibility.',
-  version: '1.1.1',
+  version: '1.2.0',
   git: 'https://github.com/rfox90/meteor-breadcrumb-plugin/'
 });
 
@@ -17,8 +17,7 @@ function configurePackage(api) {
     ]
   );
 
-  api.use('kadira:flow-router@2.8.0', 'client');
-  api.addFiles('lib/breadcrumb.html',['client']);
+  api.use('kadira:flow-router', 'client');
   api.addFiles('lib/breadcrumb.js',['client']);
 
   api.export('Breadcrumb');

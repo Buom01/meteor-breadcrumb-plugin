@@ -16,11 +16,6 @@ This package will provide a easy way to add a breadcrumb with more flexibility t
 * Flow-Router >=2.0
 * Meteor >1.0
 
-# Compatibility
-
-* works out of the box with bootstrap3
-* use the pre existing template or use your own
-
 # Installation
 
 Use `meteor add buom01:flow-router-breadcrumb` to add the package to your meteor app
@@ -28,6 +23,7 @@ Use `meteor add buom01:flow-router-breadcrumb` to add the package to your meteor
 # Usage
 
 * You need to add two parameters to your flow routes which are `parent` and `title`
+* You need to define breadcrumb template (see below)
 
 ## 1. Example Flow Router with multiple levels
 
@@ -55,7 +51,31 @@ FlowRouter.route('/dashboard/analytics/books', {
 });
 ```
 
-## 2. Example Dynamic Flow Route
+## 2. Exemple of template
+
+For bootstrap:
+```
+<template name="breadcrumb">
+    <ol class="breadcrumb">
+        {{#each Breadcrumb}}
+            <li class="{{cssClasses}}"><a href="{{url}}">{{title}}</a></li>
+        {{/each}}
+    </ol>
+</template>
+```
+or semantic-ui:
+```
+<template name="breadcrumb">
+  <div class="ui breadcrumb">
+    {{#each Breadcrumb}}
+      <a class="{{cssClasses}} section" href="{{url}}">{{title}}</a>
+      {{#unless isCurrent}}<i class="right angle icon divider"></i>{{/unless}}
+    {{/each}}
+  </div>
+</template>
+```
+
+## 3. Example Dynamic Flow Route
 
 ### In this example the Breadcrumb would look for the url `/post/hello-world` like: `Home / Blogpost Hello-World`
 
@@ -69,11 +89,12 @@ FlowRouter.route('/', {
 FlowRouter.route('/post/:_name', {
   name: 'post',
   parent: 'home', // this should be the name variable of the parent route
-  title: 'Blogpost :_name' // the variable :_name will be automatically replaced with the value from the url of by the variable provided in the template
+  title: 'Blogpost :_name' // the variable :_name will be automatically replaced with the value from the url or by the variable provided in the template
 });
 ```
 
-## 3. Example use of the de-slugify feature
+## 4. Example use of the de-slugify feature
+
 ```
 It's a common thing to provide a slug of a title/name of document in route. This leads to breadcrumb in a form:
 
@@ -89,7 +110,8 @@ slug: '-'
 ```
 Then all the '-' characters in the title will be changed into ' ' and the title will get capitalized as usual.
 
-# 4. Don't forget the waiting time
+# 5. Don't forget the waiting time
+
 If you use data provided by the template to the breadcrumb you will probably see `undefined` while data are loading. So use helpers to send `[Loading...]` instead of an undefined variable.
 `{{> breadcrumb myvar=(load myDynamicLoadingVar)}}`
 
@@ -100,21 +122,7 @@ Template.registerHelper('load', function(content){
 });
 ```
 
-## Example custom template for navigation
-
-### Please note, that you dont have to use a custom template with the name `breadcrumb`, you can use the existing one out of the box by simply using `{{> breadcrumb}}` or `{{> breadcrumb foo=bar}}` to include the preexisting template, with any variables for texts, anywhere in your own templates. It looks exact like the following example:
-
-```
-<template name="breadcrumb">
-    <ol class="breadcrumb">
-        {{#each Breadcrumb}}
-            <li class="{{cssClasses}}"><a href="{{url}}">{{title}}</a></li>
-        {{/each}}
-    </ol>
-</template>
-```
-
-## Example access of the breadcrumb in Javascript
+## 6. Example access of the breadcrumb in Javascript
 
 ```
 if (Meteor.is_client) {
