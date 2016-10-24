@@ -27,7 +27,7 @@ Use `meteor add buom01:flow-router-breadcrumb` to add the package to your meteor
 
 # Usage
 
-* You need to add two parameters to your flow routes which are `parent` and ~~`title`~~ `text` (avoid conflicts)
+* You need to add two parameters to your flow routes which are `parent` and `title`
 
 ## 1. Example Flow Router with multiple levels
 
