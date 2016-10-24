@@ -1,6 +1,6 @@
 Package.describe({
-  name: 'ahref:flow-router-breadcrumb',
-  summary: 'This package will provide a easy way to add a breadcrumb to FlowRouter with enough flexibility.',
+  name: 'buom01:flow-router-breadcrumb',
+  summary: 'This package will provide a easy way to add a breadcrumb to FlowRouter with more flexibility.',
   version: '1.1.0',
   git: 'https://github.com/rfox90/meteor-breadcrumb-plugin/'
 });

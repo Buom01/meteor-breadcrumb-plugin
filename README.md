@@ -1,15 +1,15 @@
-meteor-breadcrumb-plugin(FlowRouter Edition)
+meteor-breadcrumb-plugin enchanced (FlowRouter Edition)
 ========================
 
-This package will provide a easy way to add a breadcrumb with enough flexibility to your project.
+This package will provide a easy way to add a breadcrumb with more flexibility to your project.
 
-This FlowRouter version attempts to provide the same functionality found in the Iron Router version.
+> I made change to add dynamic variables through the breadcrumb's helper. I haven't care about performances. You can help this package to grow by verifying performance then open a ticket or make a pull request.
 
 # Current Issues
 
 * It current utilizes a private variable within FlowRouter which may cause it to break on FlowRouter updates.( I'll submit an issue about this once the other issues are resolved)
 
-# Try the [demo](http://meteor-breadcrumb-plugin-basic-example.meteor.com) which can be found on [github](https://github.com/rfox90/meteor-breadcrumb-plugin/tree/master/examples/basic)
+# The demo is [here](https://github.com/Buom01/meteor-breadcrumb-plugin/tree/master/examples/)
 
 # Dependencies
 
@@ -23,11 +23,11 @@ This FlowRouter version attempts to provide the same functionality found in the 
 
 # Installation
 
-Use `meteor add ahref:flow-router-breadcrumb` to add the package to your meteor app
+Use `meteor add buom01:flow-router-breadcrumb` to add the package to your meteor app
 
 # Usage
 
-* You need to add two parameters to your flow routes which are `parent` and `title`
+* You need to add two parameters to your flow routes which are `parent` and ~~`title`~~ `text` (avoid conflicts)
 
 ## 1. Example Flow Router with multiple levels
 
@@ -69,7 +69,7 @@ FlowRouter.route('/', {
 FlowRouter.route('/post/:_name', {
   name: 'post',
   parent: 'home', // this should be the name variable of the parent route
-  title: 'Blogpost :_name' // the variable :_name will be automatically replaced with the value from the url
+  title: 'Blogpost :_name' // the variable :_name will be automatically replaced with the value from the url of by the variable provided in the template
 });
 ```
 
@@ -89,9 +89,20 @@ slug: '-'
 ```
 Then all the '-' characters in the title will be changed into ' ' and the title will get capitalized as usual.
 
+# 4. Don't forget the waiting time
+If you use data provided by the template to the breadcrumb you will probably see `undefined` while data are loading. So use helpers to send `[Loading...]` instead of an undefined variable.
+`{{> breadcrumb myvar=(load myDynamicLoadingVar)}}`
+
+```
+Template.registerHelper('load', function(content){
+  if(content) return content;
+  return '[Loading...]';
+});
+```
+
 ## Example custom template for navigation
 
-### Please note, that you dont have to use a custom template with the name `breadcrumb`, you can use the existing one out of the box by simply using `{{> breadcrumb}}` to include the preexisting template (which looks exact like the following example) anywhere in your own templates.
+### Please note, that you dont have to use a custom template with the name `breadcrumb`, you can use the existing one out of the box by simply using `{{> breadcrumb}}` or `{{> breadcrumb foo=bar}}` to include the preexisting template, with any variables for texts, anywhere in your own templates. It looks exact like the following example:
 
 ```
 <template name="breadcrumb">
